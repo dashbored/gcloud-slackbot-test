@@ -1,16 +1,16 @@
 steps:
-  # Step 1: Use buildpacks to build the application based on package.json
-  - name: "gcr.io/cloud-builders/gcloud"
-    args:
-      [
-        "builds",
-        "submit",
-        ".",
-        "--pack",
-        "gcr.io/buildpacks/builder",
-        "--tag",
-        "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA",
-      ]
+  # # Step 1: Use buildpacks to build the application based on package.json
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   args:
+  #     [
+  #       "builds",
+  #       "submit",
+  #       ".",
+  #       "--pack",
+  #       "gcr.io/buildpacks/builder",
+  #       "--tag",
+  #       "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA",
+  #     ]
 
   # Step 2: Deploy the built image to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
