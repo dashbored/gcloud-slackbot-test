@@ -1,0 +1,33 @@
+steps:
+  # Step 1: Use buildpacks to build the application based on package.json
+  - name: "gcr.io/buildpacks/builder"
+    args:
+      [
+        "pack",
+        "build",
+        "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA",
+        "--builder",
+        "gcr.io/buildpacks/builder:v1",
+        "--path",
+        ".",
+      ]
+
+  # Step 2: Deploy the built image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "gc-slack-to-cinode-bot",
+        "--image",
+        "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA",
+        "--region",
+        "europe-north1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+        "--set-env-vars PROJECT_ID=$PROJECT_ID",
+      ]
+
+images:
+  - "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA"
